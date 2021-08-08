@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  backup:
+    build:
+      args:
+        - TARGETARCH=amd64
+      context: .
+    environment:
+      - "BACKUP_EVERY_X_HOURS=1" # backup every hour
+      - "BORG_PASSPHRASE=${BORG_PASSPHRASE:?}" # define in .env
+      - "BORG_REPOSITORY=/backups/test.borgbackup"
+      - "RCLONE_B2_ACCOUNT=${RCLONE_B2_ACCOUNT:?}" # define in .env
+      - "RCLONE_B2_BUCKET=${RCLONE_B2_BUCKET:?}" # define in .env
+      - "RCLONE_B2_KEY=${RCLONE_B2_KEY:?}" # define in .env
+    volumes:
+      - ./source:/source
+      - ./backups:/backups
