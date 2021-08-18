@@ -16,6 +16,7 @@ RUN \
 
 ADD init_cron.sh /usr/local/bin/
 ADD localbackup_remotesync.sh /usr/local/bin/
+ADD copy_remote_to_local.sh /usr/local/bin/
 
 # hours between backups(maximum 24 hours) - every 24 hours by default
 ENV BACKUP_EVERY_X_HOURS="24"
