@@ -34,6 +34,10 @@ fi
 echo "Pruning borgbackup archive ${BORG_REPOSITORY} with prune parameters, ${PRUNE_PARAMETERS}."
 borg prune --info --list --stats "${BORG_REPOSITORY}" ${PRUNE_PARAMETERS}
 
+# compact to free up disk space from old backups
+echo "Compacting borgbackup archive ${BORG_REPOSITORY}."
+borg compact "${BORG_REPOSITORY}" --verbose
+
 # sync to backblaze b2 using rclone
 echo "Running rclone to sync ${BORG_REPOSITORY} to backblaze b2 bucket ${RCLONE_B2_BUCKET}."
 rclone sync --b2-hard-delete --fast-list --stats-log-level NOTICE $(dirname ${BORG_REPOSITORY}) remote:${RCLONE_B2_BUCKET}
